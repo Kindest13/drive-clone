@@ -10,7 +10,7 @@ type Props = {
 export default async function DrivePage({
   params,
 }: Props) {
-  const {path} = await params
+  const { path } = await params
   const rawPath = path ?? []
   // rawPath segments are already URL-decoded by Next, but ensure consistent encoding
   const normalized = rawPath.map((seg) => encodeURIComponent(seg))
