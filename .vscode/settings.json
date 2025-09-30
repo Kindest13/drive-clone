@@ -1,0 +1,6 @@
+{
+    "prettier.semi": false,
+    "prettier.tabWidth": 4,
+    "prettier.enable": true,
+    "prettier.useEditorConfig": false
+}
