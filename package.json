@@ -1,5 +1,5 @@
 {
-  "name": "drive-tutorial",
+  "name": "drive-clone",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -27,7 +27,9 @@
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.41.0",
     "geist": "^1.5.1",
+    "lucide-react": "^0.544.0",
     "mono": "link:geist/font/mono",
+    "mysql2": "^3.15.1",
     "next": "^15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

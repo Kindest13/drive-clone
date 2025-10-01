@@ -21,7 +21,7 @@ export function Breadcrumbs({ path }: Props) {
 
   return (
     <nav aria-label="Breadcrumb" className="text-sm">
-      <ol className="flex flex-wrap items-center gap-2 text-muted-foreground">
+      <ol className="text-muted-foreground flex flex-wrap items-center gap-2">
         {crumbs.map((c, i) => (
           <li key={c.href} className="flex items-center gap-2">
             {i > 0 ? (

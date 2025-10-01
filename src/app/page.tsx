@@ -1,5 +1,5 @@
 import { Breadcrumbs } from "~/components/drive/breadcrumbs"
-import { ItemTable } from "~/components/drive/item-table"
+import { Table } from "~/components/drive/table"
 import { Toolbar } from "~/components/drive/toolbar"
 import { getFolderByPath, splitChildren } from "~/lib/mock-drive"
 
@@ -8,7 +8,6 @@ export default function HomePage() {
   const folder = getFolderByPath([])
   const { folders, files } = splitChildren(folder!)
   // Clicking into folders will navigate under /drive/<path>
-  const baseHref = "/drive"
   const normalizedPath: string[] = []
 
   return (
@@ -17,7 +16,7 @@ export default function HomePage() {
         <Breadcrumbs path={normalizedPath} />
         <Toolbar />
       </header>
-      <ItemTable baseHref={baseHref} folders={folders} files={files} />
+      <Table folders={folders} files={files} />
     </main>
   )
 }

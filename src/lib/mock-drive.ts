@@ -2,7 +2,7 @@ export type DriveFile = {
   kind: "file"
   name: string
   url: string
-  size?: string
+  size: string
 }
 
 export type DriveFolder = {
@@ -95,9 +95,9 @@ export function getFolderByPath(
   if (!pathSegments || pathSegments.length === 0) return root
   let current: DriveFolder = root
   for (const seg of pathSegments) {
-    const next = current.children.find((c) => c.kind === "folder" && normalizeName(c.name) === seg) as
-      | DriveFolder
-      | undefined
+    const next = current.children.find(
+      (c) => c.kind === "folder" && normalizeName(c.name) === seg,
+    ) as DriveFolder | undefined
     if (!next) return null
     current = next
   }
@@ -106,7 +106,7 @@ export function getFolderByPath(
 
 // Normalizes folder name for URL segment usage
 export function normalizeName(name: string) {
-  return encodeURIComponent(name.replace(/\s+/g, "-"))
+  return encodeURIComponent(name.toLowerCase().replace(/\s+/g, "-"))
 }
 
 // Utility to split contents of a folder into folders/files arrays
