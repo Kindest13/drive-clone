@@ -19,6 +19,7 @@ export type DriveNode = Folder | File
 export const mockDriveNodes: DriveNode[] = [
   { type: "folder", id: "drive", parent: null, name: "My Drive" },
   { type: "folder", id: "projects", parent: "drive", name: "Projects" },
+  { type: "folder", id: "empty", parent: "projects", name: "empty" },
   {
     type: "file",
     id: "project-brief",

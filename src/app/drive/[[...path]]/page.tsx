@@ -3,7 +3,7 @@
 import { Breadcrumbs } from "~/components/drive/breadcrumbs"
 import { Table } from "~/components/drive/table"
 import { Toolbar } from "~/components/drive/toolbar"
-import { getFolderIDByPath, getFolderContent } from "~/lib/mock-data"
+import { getFolderIDByPath } from "~/lib/mock-data"
 
 type Props = {
   params: Promise<{ path?: string[] }>
@@ -32,7 +32,6 @@ export default async function DrivePage({ params }: Props) {
     )
   }
 
-  const { folders, files } = getFolderContent(folderID)
   const rootPath = "/drive"
   const baseHref = path.length ? `${rootPath}/` + path.join("/") : rootPath
 
@@ -42,7 +41,7 @@ export default async function DrivePage({ params }: Props) {
         <Breadcrumbs path={path} />
         <Toolbar />
       </header>
-      <Table baseHref={baseHref} folders={folders} files={files} />
+      <Table baseHref={baseHref} folderID={folderID} />
     </main>
   )
 }
