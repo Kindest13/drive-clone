@@ -1,13 +1,10 @@
 import { Breadcrumbs } from "~/components/drive/breadcrumbs"
 import { Table } from "~/components/drive/table"
 import { Toolbar } from "~/components/drive/toolbar"
-import { getFolderByPath, splitChildren } from "~/lib/mock-drive"
+import { getFolderContent } from "~/lib/mock-data"
 
 export default function HomePage() {
-  // Show root ("My Drive") contents on the homepage
-  const folder = getFolderByPath([])
-  const { folders, files } = splitChildren(folder!)
-  // Clicking into folders will navigate under /drive/<path>
+  const { folders, files } = getFolderContent("drive")
   const normalizedPath: string[] = []
 
   return (

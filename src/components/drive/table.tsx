@@ -1,6 +1,6 @@
 "use client"
 
-import { type DriveFile, type DriveFolder } from "~/lib/mock-drive"
+import { type File, type Folder } from "~/lib/mock-data"
 import {
   Table as CTable,
   TableBody,
@@ -11,8 +11,8 @@ import {
 import TableBodyInternal from "./table-body"
 
 type Props = {
-  folders: DriveFolder[]
-  files: DriveFile[]
+  folders: Folder[]
+  files: File[]
   baseHref?: string 
 }
 

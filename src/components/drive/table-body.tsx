@@ -1,22 +1,19 @@
-import { Folder, File } from "lucide-react"
-import {
-  normalizeName,
-  type DriveFile,
-  type DriveFolder,
-} from "~/lib/mock-drive"
+import { Folder as FolderIcon, File as FileIcon } from "lucide-react"
+import { normalizeFolderID, type File, type Folder } from "~/lib/mock-data"
 import { TableRow, TableCell } from "../ui/table"
 import Link from "next/link"
 
 type Props = {
-  folders: DriveFolder[]
-  files: DriveFile[]
+  folders: Folder[]
+  files: File[]
   baseHref: string
 }
+
 export default function TableBody({ baseHref, folders, files }: Props) {
   return (
     <>
       {folders.map((folder) => {
-        const href = `${baseHref}/${normalizeName(folder.name)}`
+        const href = `${baseHref}/${normalizeFolderID(folder.id)}`
         return (
           <TableRow key={`folder-${folder.name}`}>
             <TableCell className="py-3">
@@ -25,7 +22,7 @@ export default function TableBody({ baseHref, folders, files }: Props) {
                 aria-label={`Open folder ${folder.name}`}
                 className="text-foreground flex items-center hover:underline"
               >
-                <Folder className="mr-3" size={20} />
+                <FolderIcon className="mr-3" size={20} />
                 {folder.name}
               </Link>
             </TableCell>
@@ -46,7 +43,7 @@ export default function TableBody({ baseHref, folders, files }: Props) {
               aria-label={`Open file ${file.name}`}
               className="text-foreground flex items-center hover:underline"
             >
-              <File className="mr-3" size={20} />
+              <FileIcon className="mr-3" size={20} />
               {file.name}
             </a>
           </TableCell>

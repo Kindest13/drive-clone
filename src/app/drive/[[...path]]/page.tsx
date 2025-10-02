@@ -1,27 +1,23 @@
-'use server';
+"use server"
 
 import { Breadcrumbs } from "~/components/drive/breadcrumbs"
 import { Table } from "~/components/drive/table"
 import { Toolbar } from "~/components/drive/toolbar"
-import { getFolderByPath, splitChildren } from "~/lib/mock-drive"
+import { getFolderIDByPath, getFolderContent } from "~/lib/mock-data"
 
 type Props = {
   params: Promise<{ path?: string[] }>
 }
 
 export default async function DrivePage({ params }: Props) {
-  const { path } = await params
-  const rawPath = path ?? []
-  // rawPath segments are already URL-decoded by Next, but ensure consistent encoding
-  const normalized = rawPath.map((seg) => encodeURIComponent(seg))
+  const path = (await params).path ?? []
+  const folderID = getFolderIDByPath(path)
 
-  const folder = getFolderByPath(rawPath)
-
-  if (!folder) {
+  if (!folderID) {
     return (
       <main className="mx-auto max-w-6xl p-6">
         <header className="mb-6 flex flex-col gap-4">
-          <Breadcrumbs path={normalized} />
+          <Breadcrumbs path={path} />
           <Toolbar />
         </header>
         <div className="bg-card rounded-md border p-8 text-center">
@@ -36,14 +32,17 @@ export default async function DrivePage({ params }: Props) {
     )
   }
 
-  const { folders, files } = splitChildren(folder)
-  const baseHref =
-    "/drive" + (normalized.length ? "/" + normalized.join("/") : "")
+  const { folders, files } = getFolderContent(folderID)
+  const rootPath = "/drive"
+  const baseHref = path.length
+    ? `${rootPath}/` + path.join("/")
+    : rootPath
 
-  return (
+
+    return (
     <main className="mx-auto max-w-6xl p-6">
       <header className="mb-6 space-y-4">
-        <Breadcrumbs path={normalized} />
+        <Breadcrumbs path={path} />
         <Toolbar />
       </header>
       <Table baseHref={baseHref} folders={folders} files={files} />
