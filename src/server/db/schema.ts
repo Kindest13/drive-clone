@@ -1,24 +1,33 @@
+import "server-only"
+
 import {
   int,
   bigint,
   text,
-  singlestoreTable,
+  index,
+  singlestoreTableCreator,
 } from "drizzle-orm/singlestore-core"
 
-export const users = singlestoreTable("users_table", {
-  id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
-  name: text("name"),
-  age: int("age"),
-})
+const createTable = singlestoreTableCreator((name) => `drive-clone_${name}`)
 
-export const files = singlestoreTable("files_table", {
-  id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
-  name: text("name"),
-  url: text("url"),
-  size: int("size"),
-})
+export const files = createTable(
+  "files_table",
+  {
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
+    name: text("name"),
+    url: text("url").notNull(),
+    size: int("size"),
+    parent: bigint("parent", { mode: "bigint", unsigned: true }).notNull(),
+  },
+  (t) => [index("parent_index").on(t.parent)],
+)
 
-export const folders = singlestoreTable("folders_table", {
-  id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
-  name: text("name"),
-})
+export const folders = createTable(
+  "folders_table",
+  {
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
+    name: text("name").notNull(),
+    parent: bigint("parent", { mode: "bigint", unsigned: true }),
+  },
+  (t) => [index("parent_index").on(t.parent)],
+)

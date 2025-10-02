@@ -4,6 +4,11 @@ import { Breadcrumbs } from "~/components/drive/breadcrumbs"
 import { Table } from "~/components/drive/table"
 import { Toolbar } from "~/components/drive/toolbar"
 import { getFolderIDByPath } from "~/lib/mock-data"
+import { db } from "~/server/db"
+import {
+  files as filesSchema,
+  folders as foldersSchema,
+} from "~/server/db/schema"
 
 type Props = {
   params: Promise<{ path?: string[] }>
@@ -12,6 +17,8 @@ type Props = {
 export default async function DrivePage({ params }: Props) {
   const path = (await params).path ?? []
   const folderID = getFolderIDByPath(path)
+  const files = await db.select().from(filesSchema)
+  const folders = await db.select().from(foldersSchema)
 
   if (!folderID) {
     return (
@@ -41,7 +48,12 @@ export default async function DrivePage({ params }: Props) {
         <Breadcrumbs path={path} />
         <Toolbar />
       </header>
-      <Table baseHref={baseHref} folderID={folderID} />
+      <Table
+        baseHref={baseHref}
+        // folderID={folderID}
+        files={files}
+        folders={folders}
+      />
     </main>
   )
 }

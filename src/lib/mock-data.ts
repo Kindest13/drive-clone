@@ -115,20 +115,21 @@ export function getFolderIDByPath(
 }
 
 // Normalize folder id for URL segments
-export function normalizeFolderID(name: string) {
-  return encodeURIComponent(name.toLowerCase().replace(/\s+/g, "-"))
+export function normalizeFolderID(name: bigint | string) {
+  return name.toString()
+  // return encodeURIComponent(name.toLowerCase().replace(/\s+/g, "-"))
 }
 
 // Get folder contents (files + folders)
-export function getChildren(parentId: string | null) {
-  return mockDriveNodes.filter((n) => n.parent === parentId)
+export function getChildren(parentId: string | null, nodes: DriveNode[]) {
+  return nodes.filter((n) => n.parent === parentId)
 }
 
 // Split into separate arrays
-export function getFolderContent(folderID: string) {
+export function getFolderContent(folderID: string, content: DriveNode[]) {
   const folders: Folder[] = []
   const files: File[] = []
-  const nodes = getChildren(folderID)
+  const nodes = getChildren(folderID, content)
 
   for (const node of nodes) {
     if (node.type === "folder") folders.push(node)

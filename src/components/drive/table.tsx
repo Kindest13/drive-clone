@@ -1,6 +1,5 @@
 "use client"
 
-import { getFolderContent } from "~/lib/mock-data"
 import {
   Table as CTable,
   TableBody,
@@ -8,19 +7,25 @@ import {
   TableRow,
   TableHeader,
 } from "~/components/ui/table"
+import type {
+  folders as foldersSchema,
+  files as filesSchema,
+} from "~/server/db/schema"
 import TableBodyInternal from "./table-body"
-import { useMemo } from "react"
 
 type Props = {
-  folderID: string
+  //   folderID: string
+  folders: (typeof foldersSchema.$inferSelect)[]
+  files: (typeof filesSchema.$inferSelect)[]
   baseHref?: string
 }
 
-export function Table({ baseHref = "/drive", folderID }: Props) {
-  const { folders, files } = useMemo(
-    () => getFolderContent(folderID),
-    [folderID],
-  )
+export function Table({
+  baseHref = "/drive",
+  //   folderID,
+  folders,
+  files,
+}: Props) {
   return (
     <div className="w-full overflow-x-auto rounded-md border">
       <CTable aria-label="Folder contents table">
