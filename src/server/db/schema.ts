@@ -2,7 +2,6 @@ import {
   int,
   bigint,
   text,
-  
   singlestoreTable,
 } from "drizzle-orm/singlestore-core"
 
@@ -22,5 +21,4 @@ export const files = singlestoreTable("files_table", {
 export const folders = singlestoreTable("folders_table", {
   id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
   name: text("name"),
-  children: text("ids").array(),
 })

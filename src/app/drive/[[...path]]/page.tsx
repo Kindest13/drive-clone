@@ -34,12 +34,9 @@ export default async function DrivePage({ params }: Props) {
 
   const { folders, files } = getFolderContent(folderID)
   const rootPath = "/drive"
-  const baseHref = path.length
-    ? `${rootPath}/` + path.join("/")
-    : rootPath
+  const baseHref = path.length ? `${rootPath}/` + path.join("/") : rootPath
 
-
-    return (
+  return (
     <main className="mx-auto max-w-6xl p-6">
       <header className="mb-6 space-y-4">
         <Breadcrumbs path={path} />

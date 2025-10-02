@@ -13,10 +13,10 @@ import TableBodyInternal from "./table-body"
 type Props = {
   folders: Folder[]
   files: File[]
-  baseHref?: string 
+  baseHref?: string
 }
 
-export function Table({ baseHref='/drive', folders, files }: Props) {
+export function Table({ baseHref = "/drive", folders, files }: Props) {
   return (
     <div className="w-full overflow-x-auto rounded-md border">
       <CTable aria-label="Folder contents table">
@@ -28,7 +28,11 @@ export function Table({ baseHref='/drive', folders, files }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableBodyInternal baseHref={baseHref} folders={folders} files={files} />
+          <TableBodyInternal
+            baseHref={baseHref}
+            folders={folders}
+            files={files}
+          />
         </TableBody>
       </CTable>
     </div>
