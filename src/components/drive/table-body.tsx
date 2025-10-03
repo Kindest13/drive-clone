@@ -1,15 +1,12 @@
 import { Folder as FolderIcon, File as FileIcon } from "lucide-react"
 import { normalizeFolderID } from "~/lib/mock-data"
 import { TableRow, TableCell } from "../ui/table"
-import type {
-  folders as foldersSchema,
-  files as filesSchema,
-} from "~/server/db/schema"
 import Link from "next/link"
+import type { DB_FileType, DB_FolderType } from "~/server/db/schema"
 
 type Props = {
-  folders: (typeof foldersSchema.$inferSelect)[]
-  files: (typeof filesSchema.$inferSelect)[]
+  folders: DB_FolderType[]
+  files: DB_FileType[]
   baseHref: string
 }
 

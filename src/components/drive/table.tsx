@@ -7,25 +7,16 @@ import {
   TableRow,
   TableHeader,
 } from "~/components/ui/table"
-import type {
-  folders as foldersSchema,
-  files as filesSchema,
-} from "~/server/db/schema"
+import type { DB_FolderType, DB_FileType } from "~/server/db/schema"
 import TableBodyInternal from "./table-body"
 
 type Props = {
-  //   folderID: string
-  folders: (typeof foldersSchema.$inferSelect)[]
-  files: (typeof filesSchema.$inferSelect)[]
+  folders: DB_FolderType[]
+  files: DB_FileType[]
   baseHref?: string
 }
 
-export function Table({
-  baseHref = "/drive",
-  //   folderID,
-  folders,
-  files,
-}: Props) {
+export function Table({ baseHref = "/drive/1", folders, files }: Props) {
   return (
     <div className="w-full overflow-x-auto rounded-md border">
       <CTable aria-label="Folder contents table">

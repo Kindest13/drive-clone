@@ -2,22 +2,15 @@
 
 import Link from "next/link"
 import { cn } from "~/lib/utils"
+import type { DB_FolderType } from "~/server/db/schema"
+import { buildCrumbs } from "./utils"
 
 type Props = {
-  path: string[] // normalized segments
+  parents: DB_FolderType[]
 }
 
-export function Breadcrumbs({ path }: Props) {
-  const crumbs = [
-    { label: "My Drive", href: "/drive" },
-    ...path.map((_, idx) => {
-      const subPath = path.slice(0, idx + 1)
-      const href = "/drive/" + subPath.join("/")
-      const currentPath = subPath[idx] ?? ""
-      const label = decodeURIComponent(currentPath).replace(/-/g, " ")
-      return { label, href }
-    }),
-  ]
+export function Breadcrumbs({ parents }: Props) {
+  const crumbs = buildCrumbs(parents)
 
   return (
     <nav aria-label="Breadcrumb" className="text-sm">

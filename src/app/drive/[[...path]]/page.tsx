@@ -3,12 +3,8 @@
 import { Breadcrumbs } from "~/components/drive/breadcrumbs"
 import { Table } from "~/components/drive/table"
 import { Toolbar } from "~/components/drive/toolbar"
-import { getFolderIDByPath } from "~/lib/mock-data"
-import { db } from "~/server/db"
-import {
-  files as filesSchema,
-  folders as foldersSchema,
-} from "~/server/db/schema"
+import { QUERIES } from "~/server/db/queries"
+import NotFound from "../not-found"
 
 type Props = {
   params: Promise<{ path?: string[] }>
@@ -16,44 +12,31 @@ type Props = {
 
 export default async function DrivePage({ params }: Props) {
   const path = (await params).path ?? []
-  const folderID = getFolderIDByPath(path)
-  const files = await db.select().from(filesSchema)
-  const folders = await db.select().from(foldersSchema)
+  const folderID = parseInt(path.at(-1) ?? "")
+  let parents = []
 
-  if (!folderID) {
-    return (
-      <main className="mx-auto max-w-6xl p-6">
-        <header className="mb-6 flex flex-col gap-4">
-          <Breadcrumbs path={path} />
-          <Toolbar />
-        </header>
-        <div className="bg-card rounded-md border p-8 text-center">
-          <h1 className="text-foreground mb-2 text-lg font-medium">
-            Folder not found
-          </h1>
-          <p className="text-muted-foreground text-sm">
-            The folder you’re looking for doesn’t exist or was moved.
-          </p>
-        </div>
-      </main>
-    )
+  try {
+    parents = await QUERIES.getAllParentsForFolder(folderID)
+  } catch {
+    return <NotFound />
   }
 
+  const [files, folders] = await Promise.all([
+    QUERIES.getFiles(folderID),
+    QUERIES.getFolders(folderID),
+  ])
   const rootPath = "/drive"
-  const baseHref = path.length ? `${rootPath}/` + path.join("/") : rootPath
+  const baseHref = path.length
+    ? `${rootPath}/` + path.join("/")
+    : `${rootPath}/1`
 
   return (
     <main className="mx-auto max-w-6xl p-6">
       <header className="mb-6 space-y-4">
-        <Breadcrumbs path={path} />
+        <Breadcrumbs parents={parents} />
         <Toolbar />
       </header>
-      <Table
-        baseHref={baseHref}
-        // folderID={folderID}
-        files={files}
-        folders={folders}
-      />
+      <Table baseHref={baseHref} files={files} folders={folders} />
     </main>
   )
 }
