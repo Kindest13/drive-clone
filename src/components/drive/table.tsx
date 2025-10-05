@@ -47,7 +47,7 @@ export function Table({
       </CTable>
       <UploadButton
         input={{ folderId: currentFolderId }}
-        endpoint="imageUploader"
+        endpoint="driveUploader"
         onClientUploadComplete={() => navigate.refresh()}
       />
     </div>
