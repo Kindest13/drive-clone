@@ -35,3 +35,19 @@ export const QUERIES = {
     return parents
   },
 }
+
+export const MUTATIONS = {
+  createFile: async function (input: {
+    file: {
+      name: string | null
+      url: string
+      size: number | null
+      parent: bigint
+    }
+    userId: string
+  }) {
+    return await db
+      .insert(files_table)
+      .values({ ...input.file, parent: BigInt(1) })
+  },
+}

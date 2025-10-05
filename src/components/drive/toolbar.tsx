@@ -1,16 +1,12 @@
 "use client"
 
+import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs"
 import type React from "react"
 
 import { useRef } from "react"
-import { Button } from "~/components/ui/button"
 
 export function Toolbar() {
   const inputRef = useRef<HTMLInputElement | null>(null)
-
-  function onUploadClick() {
-    inputRef.current?.click()
-  }
 
   function onFilesSelected(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files
@@ -44,14 +40,12 @@ export function Toolbar() {
         aria-hidden="true"
         tabIndex={-1}
       />
-      <Button
-        variant="default"
-        onClick={onUploadClick}
-        aria-label="Upload files"
-        className="bg-primary text-primary-foreground hover:opacity-90"
-      >
-        Upload
-      </Button>
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
     </div>
   )
 }

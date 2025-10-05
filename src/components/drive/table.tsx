@@ -9,6 +9,8 @@ import {
 } from "~/components/ui/table"
 import type { DB_FolderType, DB_FileType } from "~/server/db/schema"
 import TableBodyInternal from "./table-body"
+import { UploadButton } from "~/utils/uploadthing"
+import { useRouter } from "next/navigation"
 
 type Props = {
   folders: DB_FolderType[]
@@ -17,6 +19,8 @@ type Props = {
 }
 
 export function Table({ baseHref = "/drive/1", folders, files }: Props) {
+  const navigate = useRouter()
+
   return (
     <div className="w-full overflow-x-auto rounded-md border">
       <CTable aria-label="Folder contents table">
@@ -35,6 +39,7 @@ export function Table({ baseHref = "/drive/1", folders, files }: Props) {
           />
         </TableBody>
       </CTable>
+      <UploadButton endpoint="imageUploader" onClientUploadComplete={() => navigate.refresh()} />
     </div>
   )
 }
