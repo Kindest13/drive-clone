@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Suspense } from "react"
+import { ClerkProvider } from "@clerk/nextjs"
 import "~/styles/globals.css"
 
 export const metadata: Metadata = {
@@ -17,10 +18,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="dark">
+        <body
+          className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}
+        >
+          <Suspense fallback={null}>{children}</Suspense>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
