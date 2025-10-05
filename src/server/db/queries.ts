@@ -40,6 +40,7 @@ export const MUTATIONS = {
   createFile: async function (input: {
     file: {
       name: string | null
+      ownerId: string
       url: string
       size: number | null
       parent: bigint
@@ -48,6 +49,6 @@ export const MUTATIONS = {
   }) {
     return await db
       .insert(files_table)
-      .values({ ...input.file, parent: BigInt(1) })
+      .values({ ...input.file, parent: input.file.parent })
   },
 }

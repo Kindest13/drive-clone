@@ -8,7 +8,7 @@ import "~/styles/globals.css"
 
 export const metadata: Metadata = {
   title: "Drive Clone",
-  description: "Created by NR",
+  description: "Minimalistic version of Google Drive.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 }
 
