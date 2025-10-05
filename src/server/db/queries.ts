@@ -34,6 +34,14 @@ export const QUERIES = {
     }
     return parents
   },
+  getFolderById: async (folderID: number) => {
+    const folder = await db
+      .select()
+      .from(folders_table)
+      .where(eq(folders_table.id, BigInt(folderID)))
+
+    return folder[0]
+  },
 }
 
 export const MUTATIONS = {
@@ -43,12 +51,12 @@ export const MUTATIONS = {
       ownerId: string
       url: string
       size: number | null
-      parent: bigint
+      parent: number
     }
     userId: string
   }) {
     return await db
       .insert(files_table)
-      .values({ ...input.file, parent: input.file.parent })
+      .values({ ...input.file, ownerId: input.userId })
   },
 }

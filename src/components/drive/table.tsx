@@ -13,12 +13,18 @@ import { UploadButton } from "~/utils/uploadthing"
 import { useRouter } from "next/navigation"
 
 type Props = {
+  currentFolderId: number
   folders: DB_FolderType[]
   files: DB_FileType[]
   baseHref?: string
 }
 
-export function Table({ baseHref = "/drive/1", folders, files }: Props) {
+export function Table({
+  baseHref = "/drive/1",
+  folders,
+  files,
+  currentFolderId,
+}: Props) {
   const navigate = useRouter()
 
   return (
@@ -39,7 +45,11 @@ export function Table({ baseHref = "/drive/1", folders, files }: Props) {
           />
         </TableBody>
       </CTable>
-      <UploadButton endpoint="imageUploader" onClientUploadComplete={() => navigate.refresh()} />
+      <UploadButton
+        input={{ folderId: currentFolderId }}
+        endpoint="imageUploader"
+        onClientUploadComplete={() => navigate.refresh()}
+      />
     </div>
   )
 }

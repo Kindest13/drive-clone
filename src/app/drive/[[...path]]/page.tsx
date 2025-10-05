@@ -36,7 +36,12 @@ export default async function DrivePage({ params }: Props) {
         <Breadcrumbs parents={parents} />
         <Toolbar />
       </header>
-      <Table baseHref={baseHref} files={files} folders={folders} />
+      <Table
+        baseHref={baseHref}
+        files={files}
+        folders={folders}
+        currentFolderId={folderID}
+      />
     </main>
   )
 }

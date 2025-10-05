@@ -19,7 +19,8 @@ export default async function HomePage() {
         <Breadcrumbs parents={[]} />
         <Toolbar />
       </header>
-      <Table files={files} folders={folders} />
+      {/* TODO: Provide currentFolderId  */}
+      <Table files={files} folders={folders} currentFolderId={1} />
     </main>
   )
 }
