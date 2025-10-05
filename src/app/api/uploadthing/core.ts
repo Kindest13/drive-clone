@@ -50,7 +50,7 @@ export const ourFileRouter = {
           ownerId: metadata.userId,
           size: file.size,
           url: file.url,
-          parent: metadata.parentId,
+          parent: metadata.parentId as unknown as bigint,
         },
         userId: metadata.userId,
       })

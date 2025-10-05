@@ -51,7 +51,7 @@ export const MUTATIONS = {
       ownerId: string
       url: string
       size: number | null
-      parent: number
+      parent: bigint
     }
     userId: string
   }) {
